@@ -1,12 +1,13 @@
 #!/bin/bash
 #
-# Drupal code compliance.
+# Drupal code standard fixer.
 #
 # @author Jian (Robin) ZHAO 
 #
 # @email boborabit@gmail.com
 
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+dir=${dir}/scripts
 
 file=$1
 control[1]='if';
