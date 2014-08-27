@@ -9,6 +9,16 @@
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 dir=${dir}/scripts
 
+if [ -d ${dir} ]; then
+  echo "Error: scripts directory missing.";
+  exit 1;
+fi
+
+if [ -f $1 ]; then
+  echo "Error: $1 not found.";
+  exit 1;
+fi
+
 file=$1
 control[1]='if';
 control[2]='foreach';
