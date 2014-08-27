@@ -10,6 +10,12 @@ filename=$1
 
 function prependFileDoc()
 {
+  cat $1 | head -5 | grep '/\*\*' > /dev/null
+
+  if [ $? -eq 0 ]; then
+    return 1;
+  fi
+
   sed -i '1a\/**' $1
   sed -i '2a\ * @file' $1
   sed -i '3a\ * Description of filename.' $1
@@ -17,9 +23,50 @@ function prependFileDoc()
   sed -i '5a\' $1
 }
 
-cat ${filename} | head -5 | grep '/\*\*' > /dev/null
+function prependDocToLine()
+{
+  local file=$1
+  local line=$2
+  local numSpaces=$3
 
-if [ $? -eq 1 ]; then
-  prependFileDoc ${filename};
-fi
+  cat ${file} | head -${line} | tail -5 | grep '\*' > /dev/null
+  if [ $? -eq 0 ]; then
+    return 1;
+  fi
+  space="";
+  if [ ${numSpaces} -gt 1 ]; then
+    space="$(printf ' %0.s' $(seq 0 ${numSpaces}))";
+  fi
+  string=$(( ${line} - 1 ))'a\'${space}'/**';
+  sed -i "${string}" ${file} 
+  string=$(( ${line} - 0 ))'a\'${space}' * Description of function.';
+  sed -i  "${string}" ${file} 
+  string=$(( ${line} + 1 ))'a\'${space}' */';
+  sed -i "${string}" ${file} 
 
+}
+
+function prependFunctionDoc()
+{
+  local lines=$(grep -n -E "^function [a-zA-Z_]+" $1 | cut -d: -f1 | sort -nr);
+
+  for i in ${lines}; do
+    prependDocToLine $1 ${i} 0; 
+  done
+}
+
+function prependMethodDoc()
+{
+  local lines=$(grep -n -E "^\s+(public|private|protected)(\sstatic)?\s[a-zA-Z_]+" $1 | cut -d: -f1 | sort -nr);
+
+  # @todo find num of spaces.
+  local numSpace=4;
+
+  for i in ${lines}; do
+    prependDocToLine $1 ${i} ${numSpace}; 
+  done
+}
+
+prependFileDoc ${filename};
+prependFunctionDoc ${filename};
+prependMethodDoc ${filename};
