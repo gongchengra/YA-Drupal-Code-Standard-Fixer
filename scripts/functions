@@ -39,11 +39,27 @@ function appendLine()
   local numSpaces=$4
   space="";
   if [ ${numSpaces} -gt 1 ]; then
-    space="$(printf ' %0.s' $(seq 0 ${numSpaces}))";
+    space="$(printf ' %0.s' $(seq 1 ${numSpaces}))";
   fi
   local regex=${line}'a\'${space}${string};
   sed -i "${regex}" ${file} 
 }
 
+#
+# Get Position of first non-space character of a line.
+#
+# @file The filename.
+# @line The line number.
+#
+function intentPosition()
+{
+  local file=$1
+  local line=$2
+  
+  local string=$(cat ${file} | head -${line} | tail -1 | sed -r 's/^(\s*)([^\s].*$)/\1/g');
+  echo $(expr length "${string}");
+}
+
 export -f getKeywordLines
 export -f appendLine
+export -f intentPosition

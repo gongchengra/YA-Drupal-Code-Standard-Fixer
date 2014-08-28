@@ -31,7 +31,7 @@ Yet another durpal code standard fixer
  - add space after comma.
  - replace tab by 2 spaces.
  - replace private keyword by protected.
+ - split else keyword into next line.
 
- - @todo split else keyword into next line.
- - @todo align matching braces.
+ - **todo align matching braces.
 
