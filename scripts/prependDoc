@@ -33,17 +33,10 @@ function prependDocToLine()
   if [ $? -eq 0 ]; then
     return 1;
   fi
-  space="";
-  if [ ${numSpaces} -gt 1 ]; then
-    space="$(printf ' %0.s' $(seq 0 ${numSpaces}))";
-  fi
-  string=$(( ${line} - 1 ))'a\'${space}'/**';
-  sed -i "${string}" ${file} 
-  string=$(( ${line} - 0 ))'a\'${space}' * Description of function.';
-  sed -i  "${string}" ${file} 
-  string=$(( ${line} + 1 ))'a\'${space}' */';
-  sed -i "${string}" ${file} 
 
+  appendLine ${file} "$(( ${line} - 1 ))" '/**' ${numSpaces} 
+  appendLine ${file} "$(( ${line} - 0 ))" ' * Description of function.' ${numSpaces} 
+  appendLine ${file} "$(( ${line} + 1 ))" ' */' ${numSpaces} 
 }
 
 function prependFunctionDoc()

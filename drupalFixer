@@ -6,15 +6,24 @@
 #
 # @email boborabit@gmail.com
 
+
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 dir=${dir}/scripts
 
-if [ -d ${dir} ]; then
+# include the functions.
+source ${dir}/functions
+
+# format else keyword.
+${dir}/formatElse $1
+
+
+
+if [ ! -d ${dir} ]; then
   echo "Error: scripts directory missing.";
   exit 1;
 fi
 
-if [ -f $1 ]; then
+if [ ! -f $1 ]; then
   echo "Error: $1 not found.";
   exit 1;
 fi
