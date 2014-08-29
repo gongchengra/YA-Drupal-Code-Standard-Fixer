@@ -3,8 +3,14 @@ YA-Drupal-Code-Standard-Fixer
 
 Yet another durpal code standard fixer
 
-## Installation
+  Manually fixing coding standard is tedious, so this tool tries to do part
+of the dirty job. 
 
+  Use this as a compliment of your favorite IDE, and do a git diff after fix
+is recommanded. 
+
+
+## Installation
 
 1) git clone https://github.com/robin-zhao/YA-Drupal-Code-Standard-Fixer.git
 
@@ -13,10 +19,6 @@ Yet another durpal code standard fixer
 3) source ~/.bashrc
 
 4) drupalFixer PHPFILE
-
-## NOTICE
-
-  This is a pre-alpha script with limited fixes, better diff with original version after fix.
 
 
 ## FEATURES
@@ -32,6 +34,4 @@ Yet another durpal code standard fixer
  - replace tab by 2 spaces.
  - replace private keyword by protected.
  - split else keyword into next line.
-
- - **todo align matching braces.
 
